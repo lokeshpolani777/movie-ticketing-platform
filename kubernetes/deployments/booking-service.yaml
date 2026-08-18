@@ -1,0 +1,72 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: booking-service
+  namespace: movie-ticketing
+
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: booking-service
+
+  template:
+    metadata:
+      labels:
+        app: booking-service
+
+    spec:
+      containers:
+        - name: booking-service
+
+          image: 628884045432.dkr.ecr.ap-south-1.amazonaws.com/booking-service:4
+
+          imagePullPolicy: Always
+
+          ports:
+            - containerPort: 8082
+
+          env:
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: movie-ticketing-db-config
+                  key: DB_HOST
+
+            - name: DB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: movie-ticketing-db-config
+                  key: DB_PORT
+
+            - name: DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: movie-ticketing-db-config
+                  key: DB_NAME
+
+            - name: SPRING_DATASOURCE_URL
+              value: "jdbc:mysql://$(DB_HOST):$(DB_PORT)/$(DB_NAME)?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC"
+
+            - name: SPRING_DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: movie-ticketing-db-secret
+                  key: DB_USERNAME
+
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: movie-ticketing-db-secret
+                  key: DB_PASSWORD
+
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "256Mi"
+
+            limits:
+              cpu: "500m"
+              memory: "512Mi"

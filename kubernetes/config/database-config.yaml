@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+
+metadata:
+  name: movie-ticketing-db-config
+  namespace: movie-ticketing
+
+data:
+  DB_HOST: "movie-ticketing-db.c54kc6su43pk.ap-south-1.rds.amazonaws.com"
+  DB_PORT: "3306"
+  DB_NAME: "movie_ticketing"
