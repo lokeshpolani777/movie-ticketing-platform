@@ -1,0 +1,31 @@
+---
+- name: Configure Movie Ticketing Server
+  hosts: local
+  become: true
+
+  tasks:
+
+    - name: Install required packages
+      ansible.builtin.apt:
+        name:
+          - curl
+          - git
+          - docker.io
+        state: present
+        update_cache: true
+
+    - name: Ensure Docker service is running
+      ansible.builtin.service:
+        name: docker
+        state: started
+        enabled: true
+
+    - name: Display server information
+      ansible.builtin.command:
+        cmd: hostname
+      register: hostname_output
+      changed_when: false
+
+    - name: Show hostname
+      ansible.builtin.debug:
+        msg: "Movie Ticketing Server: {{ hostname_output.stdout }}"

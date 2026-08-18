@@ -1,0 +1,41 @@
+---
+- name: Deploy Movie Ticketing Docker Application
+  hosts: local
+  become: true
+
+  vars:
+    aws_region: "ap-south-1"
+    ecr_registry: "628884045432.dkr.ecr.ap-south-1.amazonaws.com"
+
+    movie_service_image: "{{ ecr_registry }}/movie-service:4"
+    booking_service_image: "{{ ecr_registry }}/booking-service:4"
+    frontend_image: "{{ ecr_registry }}/movie-frontend:4"
+
+  tasks:
+
+    - name: Login to AWS ECR
+      ansible.builtin.shell:
+        cmd: |
+          aws ecr get-login-password --region {{ aws_region }} |
+          docker login --username AWS --password-stdin {{ ecr_registry }}
+      register: ecr_login
+      changed_when: false
+
+    - name: Pull Movie Service image
+      ansible.builtin.command:
+        cmd: docker pull "{{ movie_service_image }}"
+
+    - name: Pull Booking Service image
+      ansible.builtin.command:
+        cmd: docker pull "{{ booking_service_image }}"
+
+    - name: Pull Frontend image
+      ansible.builtin.command:
+        cmd: docker pull "{{ frontend_image }}"
+
+    - name: Display deployment images
+      ansible.builtin.debug:
+        msg:
+          - "Movie Service: {{ movie_service_image }}"
+          - "Booking Service: {{ booking_service_image }}"
+          - "Frontend: {{ frontend_image }}"

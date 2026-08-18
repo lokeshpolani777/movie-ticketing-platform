@@ -1,0 +1,8 @@
+---
+aws_region: "ap-south-1"
+
+ecr_registry: "628884045432.dkr.ecr.ap-south-1.amazonaws.com"
+
+movie_service_image: "{{ ecr_registry }}/movie-service:4"
+booking_service_image: "{{ ecr_registry }}/booking-service:4"
+frontend_image: "{{ ecr_registry }}/movie-frontend:4"
