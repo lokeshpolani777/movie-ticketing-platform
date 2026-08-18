@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Movie Ticketing Platform</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header>
+        <h1>Movie Ticketing Platform</h1>
+        <p>Book your movie tickets easily</p>
+    </header>
+
+    <main>
+
+        <!-- Movies Section -->
+
+        <section>
+
+            <h2>Available Movies</h2>
+
+            <div id="movie-list">
+                Loading movies...
+            </div>
+
+        </section>
+
+
+        <!-- Booking Section -->
+
+        <section class="booking-section">
+
+            <h2>Book Ticket</h2>
+
+            <form id="booking-form">
+
+                <label for="customerName">
+                    Customer Name
+                </label>
+
+                <input
+                    type="text"
+                    id="customerName"
+                    placeholder="Enter your name"
+                    required
+                >
+
+
+                <label for="movieId">
+                    Movie ID
+                </label>
+
+                <input
+                    type="number"
+                    id="movieId"
+                    placeholder="Enter movie ID"
+                    required
+                >
+
+
+                <label for="numberOfTickets">
+                    Number of Tickets
+                </label>
+
+                <input
+                    type="number"
+                    id="numberOfTickets"
+                    min="1"
+                    placeholder="Enter number of tickets"
+                    required
+                >
+
+
+                <button type="submit">
+                    Book Now
+                </button>
+
+            </form>
+
+        </section>
+
+
+        <!-- Booking Result -->
+
+        <section>
+
+            <h2>Booking Result</h2>
+
+            <div id="booking-result">
+                No booking yet.
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <script src="app.js"></script>
+
+</body>
+
+</html>

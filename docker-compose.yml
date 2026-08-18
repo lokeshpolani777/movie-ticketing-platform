@@ -1,0 +1,63 @@
+services:
+
+  mysql:
+    image: mysql:8.0
+    container_name: movie-mysql
+
+    environment:
+      MYSQL_ROOT_PASSWORD: Root@123
+      MYSQL_DATABASE: movie_ticketing
+      MYSQL_USER: movieapp
+      MYSQL_PASSWORD: MovieApp@123
+
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+
+
+  movie-service:
+    image: movie-service:1.0
+    container_name: movie-service
+
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/movie_ticketing
+      SPRING_DATASOURCE_USERNAME: movieapp
+      SPRING_DATASOURCE_PASSWORD: MovieApp@123
+
+    ports:
+      - "8081:8081"
+
+    depends_on:
+      - mysql
+
+
+  booking-service:
+    image: booking-service:1.0
+    container_name: booking-service
+
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/movie_ticketing
+      SPRING_DATASOURCE_USERNAME: movieapp
+      SPRING_DATASOURCE_PASSWORD: MovieApp@123
+
+    ports:
+      - "8082:8082"
+
+    depends_on:
+      - mysql
+
+
+  frontend:
+    image: movie-frontend:1.0
+    container_name: movie-frontend
+
+    ports:
+      - "8181:80"
+
+    depends_on:
+      - movie-service
+      - booking-service
+
+
+volumes:
+  mysql-data:
