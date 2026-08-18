@@ -28,3 +28,7 @@ A simple microservices-based movie ticketing application.
 ## Architecture
 
 Frontend → Movie Service / Booking Service → MySQL
+
+## CI/CD
+
+This project uses Jenkins for continuous integration.
