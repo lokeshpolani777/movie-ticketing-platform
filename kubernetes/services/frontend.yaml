@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+
+metadata:
+  name: movie-frontend
+  namespace: movie-ticketing
+
+spec:
+  type: LoadBalancer
+
+  selector:
+    app: movie-frontend
+
+  ports:
+    - protocol: TCP
+      port: 8181
+      targetPort: 80

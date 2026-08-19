@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: movie-frontend
+  namespace: movie-ticketing
+
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: movie-frontend
+
+  template:
+    metadata:
+      labels:
+        app: movie-frontend
+
+    spec:
+      containers:
+
+        - name: movie-frontend
+
+          image: 628884045432.dkr.ecr.ap-south-1.amazonaws.com/movie-frontend:4
+
+          imagePullPolicy: Always
+
+          ports:
+            - containerPort: 80
+
+          resources:
+            requests:
+              cpu: "50m"
+              memory: "64Mi"
+
+            limits:
+              cpu: "200m"
+              memory: "256Mi"
